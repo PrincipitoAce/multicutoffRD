@@ -12,7 +12,7 @@
 #'
 #' @export
 
-optimal = function(data_all, c.vec, kk=1, Lip_1, Lip_0){
+optimal = function(data_all, c.vec, kk = 1, Lip_1, Lip_0){
 
   q=length(c.vec)
 
@@ -43,7 +43,7 @@ optimal = function(data_all, c.vec, kk=1, Lip_1, Lip_0){
 
   ##### OPTIMAL CUTOFF CALC ####################################################
 
-  if(kk = 1){
+  if(kk == 1){
     for(cost in seq(0,1,0.2)){
       kk=1
       Lip_1 = kk*Lip_1temp ; Lip_0 = kk*Lip_0temp
