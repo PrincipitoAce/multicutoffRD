@@ -92,4 +92,5 @@ pseudo = function(datall, K=20, c.vec){
       }},error=function(e) return(0))
 
   }
+  return(data_all)
 }
