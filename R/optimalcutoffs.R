@@ -7,10 +7,10 @@
 #' @param K Folds
 #' @param kk Multiplicative factor on the smoothness parameter, set cost=0 when varying kk
 #' @param cost Cost value
-#' @return NOT DONE
+#' @return Data frame of optimal cutoff values alongside original cutoff values
 #'
 #' @examples
-#' optimalcutoffs(NOT DONE)
+#' optimalcutoffs(X=X, Y=Y, C=C, c.vec=original_cutoffs, K=20, kk=1, cost=0.2)
 #'
 #' @export
 
@@ -44,9 +44,8 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
 
   G = match(C, c.vec)  # Group index
   W = as.numeric(X>=C) # Treatment
-
-  n = length(Y) # sample size
-  q = length(c.vec) # number of groups
+  n = length(Y) # Sample size
+  q = length(c.vec) # Number of groups
   mu.fit = NULL
 
   datall =  data.frame(Y=Y,X=X,C=C,W=W,G=G)
@@ -73,7 +72,7 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
       dplyr::ungroup() |>
       dplyr::select(-fold_id)
 
-    # conditional prob
+    # Conditional prob
     gamfit = nnet::multinom(formula =G ~ X, data =  data_train)
     for(g in seq(1,q,1)){
       eval.dat1.m = c( data_test |>
@@ -171,7 +170,6 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
   ############################################
 
     Lip_1 = kk*Lip_1temp ; Lip_0 = kk*Lip_0temp
-
     c.all= rep(0, length(c.vec))
 
     for(g in seq(1,q,1)){
