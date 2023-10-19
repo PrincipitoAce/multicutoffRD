@@ -149,12 +149,22 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
   B.1m <- results[3]
   B.0m <- results[4]
 
-  ### NOT DONE: Should I provide an option wherein Lip_1temp, Lip_0temp, B.1m & B.0m are arguments in this function?
-  # We calc B.1m & B.0m regardless
-  ### AKA What do I do for the Lip_1, Lip_0, B.1m & B.0m values if cost is NOT NULL?
-  # if (is.null(cost)){
+  # ### NOT DONE: Option 1 Code for if Lip_1 & Lip_0 are arguments:
+  # # Bounds B.1m & B.0m
+  # bounds <- ulbounds(data = data_all, c.vec_initial = c.vec)
+  # B.1m <- bounds[1]
+  # B.0m <- bounds[2]
+  #
+  # # Smoothness parameter(s)
+  # if (is.null(Lip_1_input)){
+  #   results <- smooth(data = data_all, c.vec_initial = c.vec)
+  #   Lip_1temp <- results[1]
+  #   Lip_0temp <- results[2]
   # }
-  # else{ }
+  # else{
+  #   Lip_1temp <- Lip_1_input
+  #   Lip_0temp <- Lip_0_input
+  # }
 
   ############################################
   ########  Learning optimal cutoffs
@@ -251,9 +261,8 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
       regret_sum=c(regret_sum,max(regret))
     }
 
-    # NOT DONE: Check if c.vec is indeed the vector of originals (in proper order) & if I'm
-    # matching them up correctly
-    ## Returns data frame of original and new cutoff values
+    # NOT DONE: Check if c.all aligned with correct Groups
+    # Returns data frame of original and new cutoff values
     result = data.frame(unlist(c.vec), unlist(c.all))
     colnames(result) <- c("Original Cutoff", "New Cutoff")
     return(result)
