@@ -32,14 +32,15 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
   if (!is.numeric(kk)){
     stop("Error: kk must be numeric")
   }
-  if (!is.null(cost) & !is.numeric(cost)){
+  if (!is.numeric(cost)){
     stop("Error: cost must be numeric")
   }
 
-  # NOT DONE: If unsorted, create G value?
-  # if (is.unsorted(c.vec)){
-  #   # Sort c.vec
-  # }
+  # If c.vec is unsorted, then sort
+  if (is.unsorted(c.vec)){
+    # Sort c.vec
+    c.vec <- sort(c.vec, decreasing = TRUE)
+  }
 
   G = match(C, c.vec)  # Group index
   W = as.numeric(X>=C) # Treatment
