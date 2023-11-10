@@ -3,3 +3,4 @@
 export(lip_extra)
 export(optimalcutoffs)
 export(smooth)
+export(ulbounds)

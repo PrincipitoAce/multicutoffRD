@@ -10,6 +10,7 @@
 #' @export
 
 smooth = function(data, c.vec_initial){
+  psd_dat1 = psd_dat0 =NULL; # NOT DONE: Delete later, temporary check
   q = length(c.vec_initial)
   Lip_1 = Lip_0 = matrix(0,q,q) # storing the value of smoothness parameter;  1/0: treatment/control
   B.1m = B.0m = matrix(0,nrow=q,ncol=q) # storing the value of estimated cross-group differences at cutoff point
@@ -25,6 +26,7 @@ smooth = function(data, c.vec_initial){
                     ,  temp.dat $X,g,g.pr)
 
       names(temp.vc)[1:2]=c("psout","X")
+      psd_dat1=rbind(psd_dat1,   temp.vc ) # NOT DONE: Delete later, temporary check
 
       # Section 4.3
       Lip_1[g,g.pr] = abs(nprobust::lprobust(temp.vc[,"psout"], temp.vc[,"X"], eval = max(c.vec_initial[g.pr], c.vec_initial[g]), deriv = 1, p=2, bwselect="mse-dpi")$Estimate[,5])
@@ -38,6 +40,7 @@ smooth = function(data, c.vec_initial){
                              with(temp.dat,I(G==g)*(Y-eval(parse(text =paste0("pseudo.",g))))/eval(parse(text =paste0("pseudo.ps",g))) )-
                              with(temp.dat,I(G==g.pr)*(Y-eval(parse(text =paste0("pseudo.",g.pr))))/eval(parse(text =paste0("pseudo.ps",g.pr))) ),   temp.dat $X,g,g.pr)
       names(temp.vc)[1:2]=c("psout","X")
+      psd_dat0=rbind(psd_dat0,   temp.vc ) # NOT DONE: Delete later, temporary check
 
       Lip_0[g,g.pr] = abs(nprobust::lprobust(temp.vc[,"psout"],temp.vc[,"X"],eval = min(c.vec_initial[g.pr],c.vec_initial[g]),deriv = 1,p=2,bwselect="mse-dpi")$Estimate[,5])
       B.0m[g,g.pr] = nprobust::lprobust(temp.vc[,"psout"],temp.vc[,"X"],eval = min(c.vec_initial[g.pr],c.vec_initial[g]),bwselect="mse-dpi")$Estimate[,5]
@@ -45,7 +48,7 @@ smooth = function(data, c.vec_initial){
     }
   Lip_1=Lip_1+t(Lip_1);Lip_0=Lip_0+t(Lip_0)
   B.1m= B.1m + t(-B.1m) ; B.0m= B.0m + t(-B.0m)
-  result <- c(Lip_1, Lip_0, B.1m, B.0m)
+  result <- array(c(Lip_0, Lip_1, B.0m, B.1m), dim = c(q,q,4))
   return(result)
 }
 

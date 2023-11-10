@@ -4,7 +4,7 @@
 \alias{optimalcutoffs}
 \title{Creates NOT DONE, purpose of function}
 \usage{
-optimalcutoffs(X, Y, C, c.vec, K = 20, kk = 1, cost = NULL)
+optimalcutoffs(X, Y, C, c.vec, K = 20, kk = 1, cost = 0)
 }
 \arguments{
 \item{X}{Uni-variate running variable}
@@ -22,12 +22,12 @@ optimalcutoffs(X, Y, C, c.vec, K = 20, kk = 1, cost = NULL)
 \item{cost}{Cost value}
 }
 \value{
-NOT DONE
+Data frame of optimal cutoff values alongside original cutoff values
 }
 \description{
 Creates NOT DONE, purpose of function
 }
 \examples{
-optimalcutoffs(NOT DONE)
+optimalcutoffs(X=X, Y=Y, C=C, c.vec=original_cutoffs, K=20, kk=1, cost=0.2)
 
 }
