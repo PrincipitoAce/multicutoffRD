@@ -16,3 +16,7 @@ Imports:
     nnet,
     nprobust,
     tidyr
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
