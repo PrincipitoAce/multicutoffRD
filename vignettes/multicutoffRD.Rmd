@@ -1,10 +1,11 @@
 ---
 title: "multicutoffRD"
-output: rmarkdown::html_vignette
+output: rmdformats::readthedown
 vignette: >
   %\VignetteIndexEntry{multicutoffRD}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+# css: custom.css # Change colors of theme
 ---
 
 ```{r, include = FALSE}
@@ -14,6 +15,63 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+## Description
+
+The package `multicutofRD` is...
+
+```{r setup, eval = FALSE}
+install_github("PrincipitoAce/multicutoffRD")
 library(multicutoffRD)
 ```
+
+## optimalcutoffs()
+
+Produces a data frame of new, optimal cutoff values alongside original cutoff values.
+
+* Arguments
+  + `X`: Uni-variate running variable
+  + `Y`: Outcome variable
+  + `C`: A vector of cutoff values
+  + `c.vec`: A vector of BASELINE cutoff values
+  + `K`: Folds
+  + `kk`: Multiplicative factor on the smoothness parameter, set cost = 0 when varying kk
+  + `cost`: Cost value
+
+```{r, eval=FALSE}
+cutoffs <- optimalcutoffs(X=X, Y=Y, C=C, c.vec=c.vec, K=20, kk=1, cost=0)
+```
+
+## cutoffsviz()
+
+Produces a scatter plot of new and old cutoff values.
+
+* Arguments
+  + `data`: A data frame with the following values: original cutoff values (Original Cutoffs), new cutoff values (New Cutoffs), & the difference between the original and new cutoff values (Difference)
+  + `color`: A palette of 2 colors
+
+```{r, eval=FALSE}
+cutoffsviz(cutoffs, color = c("red", "blue"))
+```
+
+[NOT DONE: Image of graph]
+
+## Packages
+
+The following packages were used to build this package:
+  
+* [dplyr](https://dplyr.tidyverse.org/)
+* [haven](https://haven.tidyverse.org/)
+* [nprobust](https://nppackages.github.io/nprobust/)
+* [nnet](https://cran.r-project.org/web/packages/nnet/nnet.pdf)
+* [tidyr](https://tidyr.tidyverse.org/)
+* [ggplot2](https://ggplot2.tidyverse.org/)
+
+## Repository
+
+The repository for this package can be found at [`https://github.com/PrincipitoAce/multicutoffRD`](https://github.com/PrincipitoAce/multicutoffRD).
+
+
+## References
+
+* Zhang, Y., Ben-Michael, E., and Imai, K. (2023). [Safe Policy Learning under Regression Discontinuity
+Designs with Multiple Cutoffs](https://arxiv.org/pdf/2208.13323.pdf).

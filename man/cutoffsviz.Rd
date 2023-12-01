@@ -7,7 +7,7 @@
 cutoffsviz(data, color)
 }
 \arguments{
-\item{data}{A data set with the following values: Original Cutoffs, New Cutoffs, & Difference}
+\item{data}{A data frame with the following values: Original Cutoffs, New Cutoffs, & Difference}
 
 \item{color}{A palette of 2 colors}
 }

@@ -7,7 +7,7 @@
 #' @param K Folds
 #' @param kk Multiplicative factor on the smoothness parameter, set cost=0 when varying kk
 #' @param cost Cost value
-#' @return Data frame of optimal cutoff values alongside original cutoff values
+#' @return Data frame of new, optimal cutoff values alongside original cutoff values
 #'
 #' @examples
 #' optimalcutoffs(X=X, Y=Y, C=C, c.vec=original_cutoffs, K=20, kk=1, cost=0.2)

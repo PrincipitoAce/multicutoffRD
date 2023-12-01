@@ -22,7 +22,7 @@ optimalcutoffs(X, Y, C, c.vec, K = 20, kk = 1, cost = 0)
 \item{cost}{Cost value}
 }
 \value{
-Data frame of optimal cutoff values alongside original cutoff values
+Data frame of new, optimal cutoff values alongside original cutoff values
 }
 \description{
 Creates NOT DONE, purpose of function
