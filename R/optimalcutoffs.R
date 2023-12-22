@@ -260,6 +260,7 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
   diffs = c.vec - c.all
   result = data.frame(unlist(c.vec), unlist(c.all), unlist(diffs))
   colnames(result) <- c("Original Cutoffs", "New Cutoffs", "Difference")
-  return(result)
+  lip_b <- list(Lip_0temp, Lip_1temp, B.0m, B.1m)
+  return(lip_b)
 
 }
