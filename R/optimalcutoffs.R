@@ -6,6 +6,7 @@
 #' @param c.vec A vector of BASELINE cutoff values
 #' @param K Folds
 #' @param kk Multiplicative factor on the smoothness parameter, set cost=0 when varying kk
+#' @param cost Cost
 #' @return Data frame of new, optimal cutoff values alongside original cutoff values
 #'
 #' @examples
@@ -13,7 +14,7 @@
 #'
 #' @export
 
-optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1){
+optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
 
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment
@@ -179,7 +180,7 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1){
   # set kk=1 when varying cost (Figure 3)
 
   #for(kk in c(0,1,2,4)){
-  for(cost in seq(0,1,0.2)){
+  #for(cost in seq(0,1,0.2)){
     kk=1
     Lip_1 = kk*Lip_1temp ; Lip_0 = kk*Lip_0temp
 
@@ -265,8 +266,13 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1){
     }
 
     ### save results
-    write.csv(c.all,paste0(paste0("0521_S",kk,"cost",cost,"_Realdat.csv")))
+    # write.csv(c.all,paste0(paste0("0521_S",kk,"cost",cost,"_Realdat.csv")))
+    # }
 
-  }
+    # Returns data frame of original cutoff values, new cutoff values, & difference
+    diffs = c.vec - c.all
+    result = data.frame(unlist(c.vec), unlist(c.all), unlist(diffs))
+    colnames(result) <- c("Original Cutoffs", "New Cutoffs", "Difference")
+    return(result)
 
 }
