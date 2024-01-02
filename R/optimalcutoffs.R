@@ -15,6 +15,8 @@
 #' @export
 
 optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
+  # Setting seed: NOT DONE, delete after testing
+  set.seed(12345)
 
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment
