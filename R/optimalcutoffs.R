@@ -15,9 +15,10 @@
 #' @export
 
 optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
-  # Setting seed: NOT DONE, delete after testing
-  set.seed(12345)
 
+  start_time1 <- Sys.time()
+
+  # Time difference of 1.000327 mins
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment
 
@@ -91,6 +92,8 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
 
   }
 
+  end_time1 <- Sys.time()
+  start_time2 <- Sys.time()
   ## Second, (1) estimate cross-group differences and (2) choose the value of smoothness parameter
 
 
@@ -132,6 +135,8 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
   Lip_1=Lip_1+t(Lip_1);Lip_0=Lip_0+t(Lip_0)
   B.1m= B.1m + t(-B.1m) ; B.0m= B.0m + t(-B.0m)
 
+  end_time2 <- Sys.time()
+  start_time3 <- Sys.time()
   ##### Save values ##################
   #Lip_1=Lip_0=matrix(0,q,q)
   # save(B.1m,file="B1m.Rdata")
@@ -169,8 +174,8 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
     return(list(upper = upper, lower = lower ))
   }
 
-
-
+  end_time3 <- Sys.time()
+  start_time4 <- Sys.time()
   ############################################
   ########  Learning optimal cutoffs
   ############################################
@@ -207,6 +212,8 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
 
     }
 
+    end_time4 <- Sys.time()
+    start_time5 <- Sys.time()
     data_mid = data_all %>% filter(X>=min(c.vec),X<max(c.vec))
 
     regret_sum=NULL
@@ -266,15 +273,23 @@ optimalcutoffs = function(X, Y, C, c.vec, K=20, kk=1, cost=0){
       }
       regret_sum=c(regret_sum,max(regret))
     }
-
+    end_time5 <- Sys.time()
     ### save results
     # write.csv(c.all,paste0(paste0("0521_S",kk,"cost",cost,"_Realdat.csv")))
     # }
+
+    # Calculating runtime
+    time1 <- end_time1 - start_time1
+    time2 <- end_time2 - start_time2
+    time3 <- end_time3 - start_time3
+    time4 <- end_time4 - start_time4
+    time5 <- end_time5 - start_time5
+    times <- c(time1, time2, time3, time4, time5)
 
     # Returns data frame of original cutoff values, new cutoff values, & difference
     diffs = c.vec - c.all
     result = data.frame(unlist(c.vec), unlist(c.all), unlist(diffs))
     colnames(result) <- c("Original Cutoffs", "New Cutoffs", "Difference")
-    return(result)
+    return(times)
 
 }
