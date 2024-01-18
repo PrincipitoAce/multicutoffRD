@@ -19,7 +19,6 @@ smooth = function(X, Y, C, c.vec, K){
 
   n=length(Y) # sample size
   q=length(c.vec) # number of groups
-  return(lip_0, lip_1)
 
   datall =  data.frame(Y=Y,X=X,C=C,D=D,G=G)
   data_split = datall %>% mutate(fold_id=sample(1:K,size=dim(datall)[1],replace=T)) %>% group_by(fold_id) %>%
