@@ -19,7 +19,7 @@ optimalcutoffs(X, Y, C, c.vec, K = 20, kk = 1, cost = 0)
 
 \item{kk}{Multiplicative factor on the smoothness parameter, set cost=0 when varying kk}
 
-\item{cost}{Cost value}
+\item{cost}{Cost}
 }
 \value{
 Data frame of new, optimal cutoff values alongside original cutoff values
