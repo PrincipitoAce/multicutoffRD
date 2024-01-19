@@ -18,7 +18,7 @@
 #' @export
 
 cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
-
+  K = 20
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment
 
