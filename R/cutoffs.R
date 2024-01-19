@@ -18,13 +18,12 @@
 #' @export
 
 cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
-
+  K = 20
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment
 
   n=length(Y) # sample size
   q=length(c.vec) # number of groups
-  return(lip_0, lip_1)
 
   datall =  data.frame(Y=Y,X=X,C=C,D=D,G=G)
   data_split = datall %>% mutate(fold_id=sample(1:K,size=dim(datall)[1],replace=T)) %>% group_by(fold_id) %>%
