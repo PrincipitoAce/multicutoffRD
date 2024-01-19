@@ -158,6 +158,4 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
   diffs = c.vec - c.all
   result = data.frame(unlist(c.vec), unlist(c.all), unlist(diffs))
   colnames(result) <- c("Original Cutoffs", "New Cutoffs", "Difference")
-
-  return(results)
 }
