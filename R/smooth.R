@@ -97,7 +97,6 @@ smooth = function(X, Y, C, c.vec, K){
                     ,  temp.dat $X,g,g.pr)
 
       names(temp.vc)[1:2]=c("psout","X")
-      psd_dat1=rbind(psd_dat1,   temp.vc )
 
       # Section 4.3
       Lip_1[g,g.pr]=abs(lprobust(temp.vc[,"psout"],temp.vc[,"X"],eval = max(c.vec[g.pr],c.vec[g]),deriv = 1,p=2,bwselect="mse-dpi")$Estimate[,5])
@@ -110,7 +109,6 @@ smooth = function(X, Y, C, c.vec, K){
                              with(temp.dat,I(G==g)*(Y-eval(parse(text =paste0("pseudo.",g))))/eval(parse(text =paste0("pseudo.ps",g))) )-
                              with(temp.dat,I(G==g.pr)*(Y-eval(parse(text =paste0("pseudo.",g.pr))))/eval(parse(text =paste0("pseudo.ps",g.pr))) ),   temp.dat $X,g,g.pr)
       names(temp.vc)[1:2]=c("psout","X")
-      psd_dat0=rbind(psd_dat0,   temp.vc )
 
       Lip_0[g,g.pr]=abs(lprobust(temp.vc[,"psout"],temp.vc[,"X"],eval = min(c.vec[g.pr],c.vec[g]),deriv = 1,p=2,bwselect="mse-dpi")$Estimate[,5])
       B.0m[g,g.pr]=lprobust(temp.vc[,"psout"],temp.vc[,"X"],eval = min(c.vec[g.pr],c.vec[g]),bwselect="mse-dpi")$Estimate[,5]
