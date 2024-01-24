@@ -6,6 +6,7 @@
 #' @param c.vec A vector of cutoff values
 #' @param kk Multiplicative factor
 #' @param cost cost
+#' @param K K-folds, default is 20
 #' @param Lip_0temp Smoothness
 #' @param Lip_1temp Smoothness
 #' @param B.0m B0
@@ -17,8 +18,8 @@
 #'
 #' @export
 
-cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
-  K = 20
+cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
+
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment
 
@@ -29,8 +30,10 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
   data_split = datall %>% mutate(fold_id=sample(1:K,size=dim(datall)[1],replace=T)) %>% group_by(fold_id) %>%
     nest() %>% arrange(fold_id)
   data_all = data_split  %>% unnest(data) %>% ungroup()
-  ##############################################################################
 
+  Lip_1 = kk*Lip_1temp ; Lip_0 = kk*Lip_0temp
+
+  ##############################################################################
 
   lip_extra = function(x.train,group,g,g.prim){ # extrapolation function
 
@@ -56,17 +59,6 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
   ############################################
   ########  Learning optimal cutoffs
   ############################################
-
-  # kk: multiplicative factor on the smoothness parameter
-  # cost: cost of treatment
-
-  # set cost=0 when varying kk (Figure 2)
-  # set kk=1 when varying cost (Figure 3)
-
-  #for(kk in c(0,1,2,4)){
-  #for(cost in seq(0,1,0.2)){
-  kk=1
-  Lip_1 = kk*Lip_1temp ; Lip_0 = kk*Lip_0temp
 
 
   c.all= rep(0,length(c.vec))
