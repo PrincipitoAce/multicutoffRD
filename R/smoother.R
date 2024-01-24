@@ -8,11 +8,11 @@
 #' @return NOT DONE: Smoothness parameters
 #'
 #' @examples
-#' smooth(NOT DONE)
+#' smoother(NOT DONE)
 #'
 #' @export
 
-smooth = function(X, Y, C, c.vec, K){
+smoother = function(X, Y, C, c.vec, K){
 
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment

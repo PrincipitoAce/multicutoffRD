@@ -4,7 +4,7 @@
 \alias{cutoffs}
 \title{Creates NOT DONE, purpose of function}
 \usage{
-cutoffs(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m)
+cutoffs(X, Y, C, c.vec, kk, cost, K = 20, Lip_0temp, Lip_1temp, B.0m, B.1m)
 }
 \arguments{
 \item{X}{X value}
@@ -18,6 +18,8 @@ cutoffs(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m)
 \item{kk}{Multiplicative factor}
 
 \item{cost}{cost}
+
+\item{K}{K-folds, default is 20}
 
 \item{Lip_0temp}{Smoothness}
 

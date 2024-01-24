@@ -3,4 +3,4 @@
 export(cutoffs)
 export(cutoffsviz)
 export(optimalcutoffs)
-export(smooth)
+export(smoother)
