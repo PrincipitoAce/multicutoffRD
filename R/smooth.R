@@ -117,6 +117,6 @@ smooth = function(X, Y, C, c.vec, K){
   Lip_1=Lip_1+t(Lip_1);Lip_0=Lip_0+t(Lip_0)
   B1= B.1m + t(-B.1m) ; B0= B.0m + t(-B.0m)
 
-  results <- array(c(Lip_0, Lip_1, B0, B1), dim = c(23,23,4))
-  return(results)
+  result <- array(c(Lip_0, Lip_1, B0, B1), dim = c(23,23,4))
+  return(result)
 }

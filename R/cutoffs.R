@@ -53,8 +53,6 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
     return(list(upper = upper, lower = lower ))
   }
 
-  end_time3 <- Sys.time()
-  start_time4 <- Sys.time()
   ############################################
   ########  Learning optimal cutoffs
   ############################################
@@ -91,8 +89,6 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
 
   }
 
-  end_time4 <- Sys.time()
-  start_time5 <- Sys.time()
   data_mid = data_all %>% filter(X>=min(c.vec),X<max(c.vec))
 
   regret_sum=NULL
@@ -157,4 +153,5 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, Lip_0temp, Lip_1temp, B.0m, B.1m){
   diffs = c.vec - c.all
   result = data.frame(unlist(c.vec), unlist(c.all), unlist(diffs))
   colnames(result) <- c("Original Cutoffs", "New Cutoffs", "Difference")
+  return(result)
 }
