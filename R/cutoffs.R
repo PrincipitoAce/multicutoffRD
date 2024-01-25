@@ -20,9 +20,9 @@
 
 cutoffs = function(X_in, Y_in, C_in, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
 
-  G_in = match(C,c.vec)  # Group index
-  D_in = as.numeric(X>=C) # Treatment
-  n=length(Y) # sample size
+  G_in = match(C_in,c.vec)  # Group index
+  D_in = as.numeric(X_in>=C_in) # Treatment
+  n=length(Y_in) # sample size
   q=length(c.vec) # number of groups
 
   data_all = data.frame(X=X_in, Y=Y_in, C=C_in, D=D_in, G=G_in)
