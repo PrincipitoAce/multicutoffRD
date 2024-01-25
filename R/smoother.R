@@ -24,6 +24,7 @@ smoother = function(X, Y, C, c.vec, K){
   data_split = datall %>% mutate(fold_id=sample(1:K,size=dim(datall)[1],replace=T)) %>% group_by(fold_id) %>%
     nest() %>% arrange(fold_id)
   data_all = data_split  %>% unnest(data) %>% ungroup()
+
   ##############################################################################
 
   for(k in 1:K){
