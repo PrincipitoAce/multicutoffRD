@@ -29,19 +29,16 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
   data_all = data.frame(Y=Y,X=X,C=C,D=D,G=G)
 
   ##############################################################################
-  # initial values for smoothness parameter
-  Lip_1temp=Lip_1;Lip_0temp=Lip_0
-
 
   lip_extra = function(x.train,group,g,g.prim){ # extrapolation function
 
     if(group=="B1"){ #B1 G=1
-      d=1;Lip=Lip_1[g,g.prim]
+      d=1;Lip=Lip_1temp[g,g.prim]
       B.m=B.1m[g,g.prim];
       eval.main = unique(C[G == max(g,g.prim)])
     }
     if(group=="B0"){ #B1 G=1
-      d=0;Lip=Lip_0[g,g.prim]
+      d=0;Lip=Lip_0temp[g,g.prim]
       B.m=B.0m[g,g.prim];
       eval.main = unique(C[G == min(g,g.prim)])
     }
