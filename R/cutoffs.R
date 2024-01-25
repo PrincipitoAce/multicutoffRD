@@ -35,15 +35,15 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
 
   ##############################################################################
 
-  lip_extra = function(x.train,group,g,g.prim){ # extrapolation function
+  lip_extra = function(x.train,group,g,g.prim, Lip_0initial, Lip_1initial){ # extrapolation function
 
     if(group=="B1"){ #B1 G=1
-      d=1;Lip=Lip_1[g,g.prim]
+      d=1;Lip=Lip_1initial[g,g.prim]
       B.m=B.1m[g,g.prim];
       eval.main = unique(C[G == max(g,g.prim)])
     }
     if(group=="B0"){ #B1 G=1
-      d=0;Lip=Lip_0[g,g.prim]
+      d=0;Lip=Lip_0initial[g,g.prim]
       B.m=B.0m[g,g.prim];
       eval.main = unique(C[G == min(g,g.prim)])
     }
@@ -72,11 +72,11 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
 
     tryCatch(
       {  data_all[data_all$G==g &  data_all$X>=c.vec[1] & data_all$X<c.vec[q] & data_all$X<c.vec[g],paste0("d",1)]=
-        apply( cbind(eval.dat1,IND.1),1, function(x) sum(unlist(sapply(x[2]:x[2],function(g.temp) lip_extra(x.train=x[1],group="B1",g=g,g.prim = g.temp))[2,])))
+        apply( cbind(eval.dat1,IND.1),1, function(x) sum(unlist(sapply(x[2]:x[2],function(g.temp) lip_extra(x.train=x[1],group="B1",g=g,g.prim = g.temp, Lip_0initial = Lip_0, Lip_1initial = Lip_1))[2,])))
       },error=function(e) return(0))
     tryCatch(
       {  data_all[data_all$G==g &  data_all$X>=c.vec[1] & data_all$X<c.vec[q] & data_all$X>=c.vec[g],paste0("d",0)]=
-        apply( cbind(eval.dat0,IND.0),1, function(x) sum(unlist(sapply((x[2]+1):(x[2]+1),function(g.temp) lip_extra(x.train=x[1],group="B0",g=g,g.prim = g.temp))[2,])) )
+        apply( cbind(eval.dat0,IND.0),1, function(x) sum(unlist(sapply((x[2]+1):(x[2]+1),function(g.temp) lip_extra(x.train=x[1],group="B0",g=g,g.prim = g.temp, Lip_0initial = Lip_0, Lip_1initial = Lip_1))[2,])) )
       },error=function(e) return(0))
 
   }
