@@ -36,6 +36,6 @@ NOT DONE: Smoothness parameters
 Creates NOT DONE, purpose of function
 }
 \examples{
-smooth(NOT DONE)
+smoother(NOT DONE)
 
 }
