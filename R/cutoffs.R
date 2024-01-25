@@ -1,8 +1,8 @@
 #' Creates NOT DONE, purpose of function
 #'
-#' @param X_in X value
-#' @param Y_in Y value
-#' @param C_in C value
+#' @param X X value
+#' @param Y Y value
+#' @param C C value
 #' @param c.vec A vector of cutoff values
 #' @param kk Multiplicative factor
 #' @param cost cost
@@ -18,14 +18,14 @@
 #'
 #' @export
 
-cutoffs = function(X_in, Y_in, C_in, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
+cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
 
-  G_in = match(C_in,c.vec)  # Group index
-  D_in = as.numeric(X_in>=C_in) # Treatment
-  n=length(Y_in) # sample size
+  G = match(C,c.vec)  # Group index
+  D = as.numeric(X>=C) # Treatment
+  n=length(Y) # sample size
   q=length(c.vec) # number of groups
 
-  data_all = data.frame(X=X_in, Y=Y_in, C=C_in, D=D_in, G=G_in)
+  data_all = data.frame(X=X, Y=Y, C=C, D=D, G=G)
 
   ##############################################################################
 
@@ -59,7 +59,7 @@ cutoffs = function(X_in, Y_in, C_in, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp
     c.all= rep(0,length(c.vec))
 
     for(g in seq(1,q,1)){
-
+      print("loop1")
       eval.dat1 = c(data_all %>% filter(G==g, X>=c.vec[1], X<c.vec[q],X<c.vec[g]) %>% select(X))$X #d(1)
       IND.1 = sapply(eval.dat1, function(x) sum(c.vec<x))
       eval.dat0 = c(data_all %>% filter(G==g,  X>=c.vec[1], X<c.vec[q],X>=c.vec[g]) %>% select(X))$X #d(0)
@@ -81,6 +81,7 @@ cutoffs = function(X_in, Y_in, C_in, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp
     regret_sum=NULL
 
     for(g in seq(1,q,1)){
+      print("loop2")
       regret=NULL
       for( c.alt in unique(X[X>=c.vec[1]&X<c.vec[q]]) ){
         if(c.alt>=c.vec[g]){
@@ -136,6 +137,8 @@ cutoffs = function(X_in, Y_in, C_in, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp
       }
       regret_sum=c(regret_sum,max(regret))
     }
+
+    print("c.all")
 
   ##############################################################################
   # Returns data frame of original cutoff values, new cutoff values, & difference
