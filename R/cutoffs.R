@@ -1,8 +1,8 @@
 #' Creates NOT DONE, purpose of function
 #'
-#' @param X X value
-#' @param Y Y value
-#' @param C C value
+#' @param X_in X value
+#' @param Y_in Y value
+#' @param C_in C value
 #' @param c.vec A vector of cutoff values
 #' @param kk Multiplicative factor
 #' @param cost cost
@@ -14,19 +14,18 @@
 #' @return NOT DONE: Smoothness parameters
 #'
 #' @examples
-#' smooth(NOT DONE)
+#' smoother(NOT DONE)
 #'
 #' @export
 
-cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
+cutoffs = function(X_in, Y_in, C_in, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
 
-  G = match(C,c.vec)  # Group index
-  D = as.numeric(X>=C) # Treatment
-
+  G_in = match(C,c.vec)  # Group index
+  D_in = as.numeric(X>=C) # Treatment
   n=length(Y) # sample size
   q=length(c.vec) # number of groups
 
-  data_all = data.frame(Y=Y,X=X,C=C,D=D,G=G)
+  data_all = data.frame(X=X_in, Y=Y_in, C=C_in, D=D_in, G=G_in)
 
   ##############################################################################
 
@@ -80,6 +79,7 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
     data_mid = data_all %>% filter(X>=min(c.vec),X<max(c.vec))
 
     regret_sum=NULL
+
     for(g in seq(1,q,1)){
       regret=NULL
       for( c.alt in unique(X[X>=c.vec[1]&X<c.vec[q]]) ){
