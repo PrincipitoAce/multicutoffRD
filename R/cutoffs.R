@@ -18,14 +18,14 @@
 #'
 #' @export
 
-cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
+cutoffs = function(data_all, X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B.1m){
 
   G = match(C,c.vec)  # Group index
   D = as.numeric(X>=C) # Treatment
   n=length(Y) # sample size
   q=length(c.vec) # number of groups
 
-  data_all = data.frame(X=X, Y=Y, C=C, D=D, G=G)
+  #data_all = data.frame(X=X, Y=Y, C=C, D=D, G=G)
 
   ##############################################################################
 
@@ -59,11 +59,11 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
     c.all= rep(0,length(c.vec))
 
     for(g in seq(1,q,1)){
-      print("loop1")
       eval.dat1 = c(data_all %>% filter(G==g, X>=c.vec[1], X<c.vec[q],X<c.vec[g]) %>% select(X))$X #d(1)
       IND.1 = sapply(eval.dat1, function(x) sum(c.vec<x))
       eval.dat0 = c(data_all %>% filter(G==g,  X>=c.vec[1], X<c.vec[q],X>=c.vec[g]) %>% select(X))$X #d(0)
       IND.0 = sapply(eval.dat0, function(x) sum(c.vec<x))
+
 
       tryCatch(
         {  data_all[data_all$G==g &  data_all$X>=c.vec[1] & data_all$X<c.vec[q] & data_all$X<c.vec[g],paste0("d",1)]=
@@ -81,7 +81,6 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
     regret_sum=NULL
 
     for(g in seq(1,q,1)){
-      print("loop2")
       regret=NULL
       for( c.alt in unique(X[X>=c.vec[1]&X<c.vec[q]]) ){
         if(c.alt>=c.vec[g]){
@@ -124,7 +123,6 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
           tempcost= tryCatch(cost*dim(data_mid[data_mid $X<c.vec[g] & data_mid $X>=c.alt & data_mid $G==g,"Y"])[1]/n, error=function(e) return(0))
 
           temp.reg=temp1+tempDB1+tempd+tempDB2 -tempcost
-
         }
         regret=c(regret,temp.reg)
 
@@ -137,8 +135,6 @@ cutoffs = function(X, Y, C, c.vec, kk, cost, K=20, Lip_0temp, Lip_1temp, B.0m, B
       }
       regret_sum=c(regret_sum,max(regret))
     }
-
-    print("c.all")
 
   ##############################################################################
   # Returns data frame of original cutoff values, new cutoff values, & difference
